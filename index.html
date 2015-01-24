@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>jQuery Item List</title>
+    <title>jQuery selectable list</title>
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet"/>
     <style>
         .table-striped tbody tr.selected td {
@@ -12,8 +12,39 @@
         }
     </style>
 </head>
-<body>
-    <table class="table table-striped">
+<body class="container">
+    <h2 class="page-header">jQuery selectable list</h2>
+    <p>
+        jQuery plugin to enable single or multiple row selection of the HTML table. Select individual rows by clicking them,
+        or use <kbd>Shift</kbd> + mouse click for multiple selection.
+    </p>
+
+    <h3>Usage</h3>
+    <pre>
+    $(function(){
+        $("#my-table").selectableList({
+            selectedClass: "selected", -- the CSS class assigned to selected rows
+            checkSelector: "input[type=checkbox]", -- jQuery selector used to find the checkbox element within a row
+            checkallSelector: "#checkall" -- jQuery selector used to find the "check all" checkbox element (in header)
+        });
+    });
+    </pre>
+    <p>
+        These are the default option values, if you don't want to override them - use the shorter syntax:
+    </p>
+    <pre>
+    $(function(){
+        $("#my-table").selectableList();
+    });
+    </pre>
+
+    <h3>Download</h3>
+    <p>
+        <a href="jquery.selectable-list.js">jquery.selectable-list.js</a>
+    </p>
+
+    <h3>Demo</h3>
+    <table id="my-table" class="table table-striped">
         <tr>
             <td><input type="checkbox" id="checkall" title="Select all"/></td>
             <th>From</th>
@@ -122,7 +153,7 @@
     <script src="jquery.selectable-list.js"></script>
     <script>
         $(function(){
-            $("table").selectableList();
+            $("#my-table").selectableList();
         });
     </script>
 </body>
