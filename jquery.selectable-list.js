@@ -44,40 +44,44 @@
                     obj.toggle($tr, selected);
                 }
             });
+
+            this.$table.on("click", "tbody tr label", function (e) {
+                e.stopPropagation();
+            });
         },
-		trOnClick: function (e, tr) {
-                if (this.getSelection().length > 0 || this.clear)
-                    return;
+        trOnClick: function (e, tr) {
+            if (this.getSelection().length > 0 || this.clear)
+                return;
 
-				var $tr = $(tr);
-				
-                if ($(this.options.checkallSelector, $tr).length > 0) // click on header (no explicit tbody in markup)
-                    return;
+            var $tr = $(tr);
 
-                var selected = !$tr.hasClass(this.options.selectedClass);
+            if ($(this.options.checkallSelector, $tr).length > 0) // click on header (no explicit tbody in markup)
+                return;
 
-                this.toggle($tr, selected);
+            var selected = !$tr.hasClass(this.options.selectedClass);
 
-                // (un)select range with shift
-                if (e.shiftKey && this.last && this.lastSelected == selected && this.last != $tr) {
-                    var last = this.last.index();
-                    var curr = $tr.index();
-                    var start = last < curr ? this.last : $tr;
-                    var end = last < curr ? $tr : this.last;
-                    var obj = this;
-                    start.nextUntil(end).each(function () {
-                        obj.toggle($(this), selected);
-                    });
-                }
+            this.toggle($tr, selected);
 
-                this.last = $tr; // last clicked row
-                this.lastSelected = selected; // last clicked row state
+            // (un)select range with shift
+            if (e.shiftKey && this.last && this.lastSelected == selected && this.last != $tr) {
+                var last = this.last.index();
+                var curr = $tr.index();
+                var start = last < curr ? this.last : $tr;
+                var end = last < curr ? $tr : this.last;
+                var obj = this;
+                start.nextUntil(end).each(function () {
+                    obj.toggle($(this), selected);
+                });
+            }
 
-                this.allChecked();
+            this.last = $tr; // last clicked row
+            this.lastSelected = selected; // last clicked row state
 
-                if (this.options.onCheck)
-                    this.options.onCheck(this);
-            },
+            this.allChecked();
+
+            if (this.options.onCheck)
+                this.options.onCheck(this);
+        },
         checkallOnClick: function (e, checkall) {
             var selected = checkall.checked;
             var obj = this;
@@ -110,7 +114,7 @@
                 var sel = window.getSelection();
                 return sel.toString();
             }
-        },
+        }
     };
 
     $.fn.selectableList = function (options) {
